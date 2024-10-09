@@ -1,0 +1,25 @@
+
+.main-container {
+    display: grid;
+    grid-template-columns:330px 1fr;
+    grid-template-rows:1fr 1fr 1fr;
+    grid-template-areas:
+            'main-container--sidebard main-container--navbar'
+            'main-container--sidebard main-container--main'
+            'main-container--sidebard main-container--main';
+}
+
+.main-container--sidebard {
+    grid-area: main-container--sidebard;
+    background-color: #FC6868;
+    height: 100vh;
+}
+
+.main-container--navbar {
+    grid-area: main-container--navbar;
+    padding: 12px;
+}
+
+.main-container--main {
+    grid-area: main-container--main;
+}
