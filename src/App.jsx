@@ -12,7 +12,7 @@ const App = () => {
       <Switch>
         <Route path="/" component={LoginExtincor} />
           <Route path="/forgot-password" component={ForgotPassword} />
-        <Route path="/home" component={HomeExtincor} />
+        <Route path="/home/*" component={HomeExtincor} />
       </Switch>
     </div>
   );

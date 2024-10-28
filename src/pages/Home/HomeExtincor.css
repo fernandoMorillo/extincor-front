@@ -2,7 +2,7 @@
 .main-container {
     display: grid;
     grid-template-columns:330px 1fr;
-    grid-template-rows:1fr 1fr 1fr;
+    grid-template-rows:auto 1fr 1fr;
     grid-template-areas:
             'main-container--sidebard main-container--navbar'
             'main-container--sidebard main-container--main'
