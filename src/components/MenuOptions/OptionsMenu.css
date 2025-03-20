@@ -1,0 +1,25 @@
+.container--options {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 50px;
+  flex-wrap: wrap;
+}
+
+.container--options--cards {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.container--options--cards--item {
+  padding: 20px;
+  background-color: #fc6868;
+  border-radius: 7px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 18px;
+}
