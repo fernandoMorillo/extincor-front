@@ -19,4 +19,33 @@
 .name--user {
   color: #000;
   margin: 0;
+  font-weight: 600;
+}
+
+.role--user {
+  color: #fc6868;
+  margin-top: -7px;
+  font-weight: 400;
+  font-size: 14px;
+  display: block;
+  text-transform: lowercase;
+}
+
+.user-initials {
+  width: 43px;
+  height: 43px;
+  border-radius: 50%;
+  background-color: #fc6868;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 16px;
+  border: none;
+}
+
+.dropdown-item:hover {
+  background-color: #fc6868 !important;
+  color: #fff !important;
 }

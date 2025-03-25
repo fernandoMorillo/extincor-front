@@ -6,10 +6,14 @@ export const Login = async (correo, password) => {
     password,
   });
 
-  if (response.ok) {
-    const data = await response.json();
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("user", JSON.stringify(data.user));
+  if (response.data.token) {
+    const data = await response.data;
+    localStorage.setItem("token", response.data.token);
+    localStorage.setItem(
+      "user",
+      JSON.stringify(response.data?.usuario?.correo)
+    );
+    localStorage.setItem("role", JSON.stringify(response.data?.usuario?.roles));
     return data;
   } else {
     throw new Error("Credenciales incorrectas");
@@ -19,14 +23,12 @@ export const Login = async (correo, password) => {
 export const Logout = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("user");
-};
+  localStorage.removeItem("role");
 
-export const getUser = () => {
-  const user = localStorage.getItem("user");
-  return user ? JSON.parse(user) : null;
+  return true;
 };
 
 export const getRole = () => {
-  const user = getUser();
-  return user ? user.role : [];
+  const role = localStorage.getItem("role");
+  return role;
 };

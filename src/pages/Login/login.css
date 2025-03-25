@@ -1,53 +1,62 @@
 .loginBackgraund {
-    height: 100vh;
-    width: 100vw;
-    background: linear-gradient(301deg, rgba(253,0,0,1) 30%, rgba(255,115,115,1) 83%);
-    display: grid;
-    place-items: center;
+  height: 100vh;
+  width: 100vw;
+  background: linear-gradient(
+    301deg,
+    rgba(253, 0, 0, 1) 30%,
+    rgba(255, 115, 115, 1) 83%
+  );
+  display: grid;
+  place-items: center;
 }
 
 .loginContent {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    height: 400px;
-    background-color: #ffffff85;
-    border-radius: 17px;
-    width: 354px;
-    padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 400px;
+  background-color: #ffffff85;
+  border-radius: 17px;
+  width: 354px;
+  padding: 20px;
 }
 
 .loginContent--campos {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    gap: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 20px;
 }
 
-
 input {
-    height: 35px;
-    border-radius: 11px;
-    width: 74%;
-    border: none;
-    padding: 6px;
+  height: 35px;
+  border-radius: 11px;
+  width: 74%;
+  border: none;
+  padding: 6px;
 }
 
 .loginContent--btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 31px;
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 31px;
+  width: 100%;
 }
 
 .loginContent--btn button {
-    width: 50%;
-    border-radius: 50px;
-    background-color: #F70505;
-    border: none;
+  width: 50%;
+  border-radius: 50px;
+  background-color: #f70505;
+  border: none;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.loginContent--btn button:hover {
+  transform: scale(1.1);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }

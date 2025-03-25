@@ -28,7 +28,7 @@
 
 .side-bar--options > ul > li {
   background-color: #d9d9d9;
-  border-radius: 40px;
+  border-radius: 10px;
   width: 70%;
   text-decoration: none;
 }
@@ -50,13 +50,21 @@
   cursor: pointer;
 }
 
-.side-bar--logout > a {
+.side-bar--logout > button {
   color: #d9d9d9;
   text-decoration: none;
   font-weight: bold;
+  border: none;
+  background-color: transparent;
 }
 
 a {
   text-decoration: none;
   color: inherit;
+}
+
+.side-bar--logout > button:hover {
+  background-color: inherit;
+  border-radius: 5px;
+  box-shadow: #d9d9d9 0px 0px 0px 2px inset, #d9d9d9 0px 0px 0px 4px;
 }

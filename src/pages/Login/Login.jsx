@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useLocation } from "wouter";
 
@@ -6,16 +6,48 @@ import LogoExtincor from "../../assets/img/extincor-logo.png";
 import "../Login/login.css";
 import { Button, Row, Col } from "react-bootstrap";
 import { Login } from "../../services/authService";
+import Swal from "sweetalert2";
+
+import LoadingSpinner from "../../components/Spinner/Spinner";
 
 const LoginExtincor = () => {
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [, setLocation] = useLocation();
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setLocation("/home/");
+    }
+  }, []);
+
   const handleLogin = async (e) => {
     e.preventDefault();
-    await Login(email, password);
-    setLocation("/home");
+
+    if (!email || !password) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Por favor, ingrese correo y contraseña",
+      });
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await Login(email, password);
+      setLocation("/home/");
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Error de inicio de sesión",
+        text: error.message || "Usuario o contraseña incorrectos",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -44,8 +76,17 @@ const LoginExtincor = () => {
               />
             </div>
             <div className="loginContent--btn">
-              <Button variant="primary" type="submit" onClick={handleLogin}>
-                Login
+              <Button
+                variant="primary"
+                type="submit"
+                disabled={loading}
+                onClick={handleLogin}
+              >
+                {loading ? (
+                  <LoadingSpinner text="Iniciando sesión..." />
+                ) : (
+                  "Iniciar sesión"
+                )}
               </Button>
 
               <a href="/forgot-password">Forgot Password?</a>
