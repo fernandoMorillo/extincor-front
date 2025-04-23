@@ -42,6 +42,9 @@ const SideBarDashboard = () => {
           <li>
             <Link to="#">Compras</Link>
           </li>
+          <li>
+            <Link to="/home/estadisticas">Estadisticas</Link>
+          </li>
         </ul>
       </div>
       <div className="side-bar--logout">

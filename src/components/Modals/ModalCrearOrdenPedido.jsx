@@ -11,24 +11,28 @@ import {
 import apiOrdenPedido from "../../utils/axiosConfig.js";
 import Swal from "sweetalert2";
 
-const ModalCrearOrdenPedido = () => {
+const ModalCrearOrdenPedido = ({ onOrdenCreada }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [clientes, setClientes] = useState([]); // Estado para los clientes registrados
+  const [clientes, setClientes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [ordenPedidoInfo, setOrdenPedidoInfo] = useState({
-    fecha_entrega: "",
-    fecha_pedido: "",
-    estado_pedido: "",
-    monto_total: "",
+    fechaEntrega: "",
+    fechaPedido: "",
+    estadoPedido: "",
+    montoTotal: "",
     administrador_id: 1,
-    cliente_id: "", // Se almacenará el ID del cliente seleccionado
+    cliente: { id: 0 },
   });
 
   // Cargar los clientes al montar el componente
   useEffect(() => {
     const fetchClientes = async () => {
       try {
-        const response = await apiOrdenPedido.get("/clientes");
+        const response = await apiOrdenPedido.get("/clientes", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
         setClientes(response.data); // Guardar los clientes en el estado
       } catch (error) {
         console.error("Error al obtener los clientes:", error);
@@ -39,28 +43,36 @@ const ModalCrearOrdenPedido = () => {
 
   const guardarOrden = (e) => {
     const { name, value } = e.target;
-    setOrdenPedidoInfo({ ...ordenPedidoInfo, [name]: value });
+
+    if (name === "cliente") {
+      setOrdenPedidoInfo({
+        ...ordenPedidoInfo,
+        cliente: { id: parseInt(value) },
+      });
+    } else {
+      setOrdenPedidoInfo({ ...ordenPedidoInfo, [name]: value });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const {
-      fecha_entrega,
-      fecha_pedido,
-      estado_pedido,
-      monto_total,
+      fechaEntrega,
+      fechaPedido,
+      estadoPedido,
+      montoTotal,
       administrador_id,
-      cliente_id,
+      cliente,
     } = ordenPedidoInfo;
 
     if (
-      !fecha_entrega.trim() ||
-      !fecha_pedido.trim() ||
-      !estado_pedido.trim() ||
-      !monto_total.toString().trim() ||
+      !fechaEntrega.trim() ||
+      !fechaPedido.trim() ||
+      !estadoPedido.trim() ||
+      !montoTotal.toString().trim() ||
       !administrador_id ||
-      !cliente_id.toString().trim()
+      !cliente.id
     ) {
       Swal.fire({
         icon: "error",
@@ -72,21 +84,28 @@ const ModalCrearOrdenPedido = () => {
 
     setLoading(true);
     try {
-      const response = await apiOrdenPedido.post(
-        "/ordenespedidos",
-        ordenPedidoInfo
-      );
+      const response = await apiOrdenPedido.post("/ordenes", ordenPedidoInfo, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       if (response.status === 201 || response.status === 200) {
-        console.log("Orden de pedido creada exitosamente");
         setOrdenPedidoInfo({
-          fecha_entrega: "",
-          fecha_pedido: "",
-          estado_pedido: "",
-          monto_total: "",
+          fechaEntrega: "",
+          fechaPedido: "",
+          estadoPedido: "",
+          montoTotal: "",
           administrador_id: 1,
-          cliente_id: "",
+          cliente: { id: 0 },
         });
         setIsOpen(false);
+        Swal.fire({
+          icon: "success",
+          title: "¡Orden de pedido creada exitosamente!",
+          showConfirmButton: false,
+        });
+        onOrdenCreada();
+        return;
       } else {
         console.log("Error al crear la orden de pedido");
       }
@@ -121,8 +140,8 @@ const ModalCrearOrdenPedido = () => {
                         <Form.Label>Fecha entrega</Form.Label>
                         <Form.Control
                           type="date"
-                          name="fecha_entrega"
-                          value={ordenPedidoInfo.fecha_entrega}
+                          name="fechaEntrega"
+                          value={ordenPedidoInfo.fechaEntrega}
                           onChange={guardarOrden}
                         />
                       </Form.Group>
@@ -131,8 +150,8 @@ const ModalCrearOrdenPedido = () => {
                         <Form.Label>Fecha pedido</Form.Label>
                         <Form.Control
                           type="date"
-                          name="fecha_pedido"
-                          value={ordenPedidoInfo.fecha_pedido}
+                          name="fechaPedido"
+                          value={ordenPedidoInfo.fechaPedido}
                           onChange={guardarOrden}
                         />
                       </Form.Group>
@@ -142,8 +161,8 @@ const ModalCrearOrdenPedido = () => {
                         <Form.Control
                           type="text"
                           placeholder="Estado"
-                          name="estado_pedido"
-                          value={ordenPedidoInfo.estado_pedido}
+                          name="estadoPedido"
+                          value={ordenPedidoInfo.estadoPedido}
                           onChange={guardarOrden}
                         />
                       </Form.Group>
@@ -153,8 +172,8 @@ const ModalCrearOrdenPedido = () => {
                         <Form.Control
                           type="text"
                           placeholder="Monto"
-                          name="monto_total"
-                          value={ordenPedidoInfo.monto_total}
+                          name="montoTotal"
+                          value={ordenPedidoInfo.montoTotal}
                           onChange={guardarOrden}
                         />
                       </Form.Group>
@@ -162,8 +181,8 @@ const ModalCrearOrdenPedido = () => {
                       <Form.Group className="mb-3" controlId="formCliente">
                         <Form.Label>Cliente</Form.Label>
                         <Form.Select
-                          name="cliente_id"
-                          value={ordenPedidoInfo.cliente_id}
+                          name="cliente"
+                          value={ordenPedidoInfo.cliente.id}
                           onChange={guardarOrden}
                         >
                           <option value="">-- Selecciona un Cliente --</option>
