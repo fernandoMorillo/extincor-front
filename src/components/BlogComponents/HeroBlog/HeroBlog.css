@@ -1,0 +1,11 @@
+.container-hero-blog {
+  background-image: url("../../../assets/img/extintor-background.webp");
+  background-size: cover;
+  background-position: center;
+  height: 90vh;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}

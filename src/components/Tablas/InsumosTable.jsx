@@ -10,7 +10,11 @@ const InsumosTable = () => {
   useEffect(() => {
     const fetchInsumos = async () => {
       try {
-        const response = await apiInsumos.get("/insumos");
+        const response = await apiInsumos.get("/insumos", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
         setInsumos(response.data);
       } catch (error) {
         setError("Error al cargar los insumos.");
