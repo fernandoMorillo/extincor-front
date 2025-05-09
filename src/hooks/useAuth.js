@@ -1,14 +1,18 @@
 import { useLocation } from "wouter";
-import { getRole } from "../services/authService";
 
 export const useAuth = () => {
-  const role = getRole()?.toUpperCase() || "";
+  const role = localStorage.getItem("role")?.toUpperCase() || "";
+
+  const isAdmin = role === '"ADMINISTRADOR"';
+  const isOperario = role === '"OPERARIO"';
+  const isCliente = role === '"CLIENTE"';
+  const isAuthenticated = role !== "";
 
   return {
-    isAdmin: role === "ADMINISTRADOR",
-    isOperario: role === "OPERARIO",
-    isCliente: role === "CLIENTE",
-    isAuthenticated: role !== "",
+    isAdmin,
+    isOperario,
+    isCliente,
+    isAuthenticated,
   };
 };
 

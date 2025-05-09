@@ -1,4 +1,4 @@
-/* OrdenesTable.css */
+
 .ordenes-container {
     background: linear-gradient(182deg,rgba(244, 98, 99, 1) 0%, rgba(220, 53, 69, 1) 50%, rgba(237, 221, 83, 1) 100%);
     border-radius: 12px;
@@ -205,4 +205,13 @@
     .action-buttons {
         flex-direction: column;
     }
+}
+
+.btn-action.assign {
+    background-color: #6610f2;
+    color: white;
+}
+
+.btn-action.assign:hover {
+    background-color: #520dc2;
 }

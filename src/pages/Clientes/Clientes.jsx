@@ -1,27 +1,34 @@
-import {Container, Card,  CardBody, Row, Col, Button} from "react-bootstrap";
+import React from "react";
 
-import ModalCrearCliente from "../../components/Modals/ModalCrearCliente.jsx";
-import ClienteTable from "../../components/Tablas/ClienteTable.jsx";
+import { Container } from "react-bootstrap";
+
+import ClienteTable from "../../components/Tablas/TablaCliente/ClienteTable.jsx";
+
+import "./Clientes.css";
+
+
+
 const Clientes = () => {
+
     return (
         <section>
             <Container>
-                <Card>
-                    <CardBody>
-                        <Row>
-                            <Col>
-                                <ModalCrearCliente />
-                            </Col>
-                        </Row>
-                    </CardBody>
-                </Card>
+                <div className="page-header">
+                    <div className="header-content">
+                        <h1 className="page-title">
+                            <i className="bi bi-clipboard-check me-2"></i>
+                           Clientes
+                        </h1>
+                        <p className="page-description">
+                            Gestiona y monitorea todos los clientes en el sistema
+                        </p>
+                    </div>
+                </div>
 
+                <div className="content-section">
+                    <ClienteTable/>
+                </div>
 
-                <Card className="mt-4">
-                    <CardBody>
-                        <ClienteTable />
-                    </CardBody>
-                </Card>
             </Container>
         </section>
     )

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Container, Spinner, Alert, Button } from "react-bootstrap";
-import apiInsumos from "../../utils/axiosConfig.js";
+import apiInsumos from "../../../utils/axiosConfig.js";
 import "./InsumosTableStyles.css";
+import ModalCrearInsumo from "../../Modals/ModalCrearInsumo/ModalCrearInsumos.jsx";
 
 const InsumosTable = () => {
   const [insumos, setInsumos] = useState([]);
@@ -53,10 +54,7 @@ const InsumosTable = () => {
           <i className="bi bi-box-seam me-2"></i>
           Gestión de Insumos
         </h2>
-        <Button variant="primary" className="add-button">
-          <i className="bi bi-plus-lg me-2"></i>
-          Nuevo Insumo
-        </Button>
+        <ModalCrearInsumo />
       </div>
 
       <div className="table-responsive custom-table">

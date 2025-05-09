@@ -8,7 +8,7 @@ import {
   Form,
   Container,
 } from "react-bootstrap";
-import apiOrdenPedido from "../../utils/axiosConfig.js";
+import apiOrdenPedido from "../../../utils/axiosConfig.js";
 import Swal from "sweetalert2";
 
 import "./ModalCrearOrdenPedidoStyles.css";
@@ -17,6 +17,8 @@ const ModalCrearOrdenPedido = ({ onOrdenCreada }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [clientes, setClientes] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [tipoServicio, setTipoServicio] = useState("recarga");
+  const [cantidadExtintores, setCantidadExtintores] = useState(1);
   const [ordenPedidoInfo, setOrdenPedidoInfo] = useState({
     fechaEntrega: "",
     fechaPedido: "",
@@ -25,6 +27,8 @@ const ModalCrearOrdenPedido = ({ onOrdenCreada }) => {
     administrador_id: 1,
     cliente: { id: 0 },
     observacion: "",
+    tipoServicio: "recarga",
+    cantidadExtintores: 1,
   });
 
   useEffect(() => {
@@ -76,6 +80,8 @@ const ModalCrearOrdenPedido = ({ onOrdenCreada }) => {
       montoTotal,
       administrador_id,
       cliente,
+      tipoServicio,
+      cantidadExtintores,
     } = ordenPedidoInfo;
 
     if (
@@ -84,7 +90,8 @@ const ModalCrearOrdenPedido = ({ onOrdenCreada }) => {
         !estadoPedido.trim() ||
         !montoTotal.toString().trim() ||
         !administrador_id ||
-        !cliente.id
+        !cliente.id ||
+        !tipoServicio
     ) {
       Swal.fire({
         icon: "error",
@@ -94,47 +101,70 @@ const ModalCrearOrdenPedido = ({ onOrdenCreada }) => {
       return;
     }
 
+    if (tipoServicio === "venta") {
+      if (!cantidadExtintores || cantidadExtintores < 1) {
+        Swal.fire({
+          icon: "error",
+          title: "Cantidad inválida",
+          text: "Debe ingresar al menos 1 extintor para la venta.",
+        });
+        return;
+      }
+    }
+
     const fechaPedidoISO = new Date(fechaPedido).toISOString();
     const fechaEntregaISO = new Date(fechaEntrega).toISOString();
 
+    const ordenBase = {
+      ...ordenPedidoInfo,
+      fechaPedido: fechaPedidoISO,
+      fechaEntrega: fechaEntregaISO,
+    };
+
     setLoading(true);
     try {
-      const response = await apiOrdenPedido.post("/ordenes", {
-        ...ordenPedidoInfo,
-        fechaPedido: fechaPedidoISO,
-        fechaEntrega: fechaEntregaISO,
-      }, {
+      const token = localStorage.getItem("token");
+
+      await apiOrdenPedido.post("/ordenes", ordenBase, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${token}`,
         },
       });
-      if (response.status === 201 || response.status === 200) {
-        setOrdenPedidoInfo({
-          fechaEntrega: "",
-          fechaPedido: "",
-          estadoPedido: "",
-          montoTotal: "",
-          administrador_id: 1,
-          cliente: { id: 0 },
-          observacion: "",
-        });
-        setIsOpen(false);
-        Swal.fire({
-          icon: "success",
-          title: "¡Orden de pedido creada exitosamente!",
-          showConfirmButton: false,
-        });
-        onOrdenCreada();
-        return;
-      } else {
-        console.log("Error al crear la orden de pedido");
-      }
+
+      setOrdenPedidoInfo({
+        fechaEntrega: "",
+        fechaPedido: "",
+        estadoPedido: "Inactivo",
+        montoTotal: "",
+        administrador_id: 1,
+        cliente: { id: 0 },
+        observacion: "",
+        tipoServicio: "",
+        cantidadExtintores: 1,
+      });
+
+      setIsOpen(false);
+      Swal.fire({
+        icon: "success",
+        title: "¡Orden de pedido creada exitosamente!",
+        text: "Se ha creado la orden de pedido correctamente.",
+        background: "#fff",
+        confirmButtonColor: "#28a745",
+      });
+      onOrdenCreada();
     } catch (error) {
       console.error("Error al enviar los datos:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error al crear la orden",
+        text: "Intenta nuevamente.",
+      });
     } finally {
       setLoading(false);
     }
   };
+
+
 
 
   const handleClose = () => setIsOpen(false);
@@ -202,6 +232,45 @@ const ModalCrearOrdenPedido = ({ onOrdenCreada }) => {
                     </Form.Group>
                   </div>
                 </div>
+
+                <div className="form-section">
+                  <h5 className="section-title">
+                    <i className="bi bi-tools me-2"></i>
+                    Tipo de Servicio
+                  </h5>
+                  <Form.Group controlId="formTipoServicio">
+                    <Form.Label>¿Qué tipo de servicio deseas?</Form.Label>
+                    <div className="input-with-icon">
+                      <i className="bi bi-question-circle"></i>
+                      <Form.Select
+                          value={ordenPedidoInfo.tipoServicio}
+                          onChange={guardarOrden}
+                          className="select-custom"
+                          name="tipoServicio"
+                      >
+                        <option value="recarga">Recarga de Extintor</option>
+                        <option value="venta">Venta de Extintores</option>
+                      </Form.Select>
+                    </div>
+                  </Form.Group>
+
+                  {ordenPedidoInfo.tipoServicio === "venta" && (
+                      <Form.Group controlId="formCantidadExtintores" className="mt-3">
+                        <Form.Label>Cantidad de Extintores</Form.Label>
+                        <div className="input-with-icon">
+                          <i className="bi bi-123"></i>
+                          <Form.Control
+                              name="cantidadExtintores"
+                              type="number"
+                              min={1}
+                              value={ordenPedidoInfo.cantidadExtintores}
+                              onChange={guardarOrden}
+                          />
+                        </div>
+                      </Form.Group>
+                  )}
+                </div>
+
 
                 <div className="form-section">
                   <h5 className="section-title">

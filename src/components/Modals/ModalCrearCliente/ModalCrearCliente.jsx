@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-import apiCliente from "../../utils/axiosConfig.js";
+import apiCliente from "../../../utils/axiosConfig.js";
 import Swal from "sweetalert2";
 import "./ModalCrearClienteStyles.css";
 
@@ -91,15 +91,10 @@ const ModalCrearCliente = () => {
         className="modal-cliente"
       >
         <div className="modal-header-custom">
-          <div className="modal-title-custom">
-            <div className="title-icon">
-              <i className="bi bi-person-plus-fill"></i>
-            </div>
-            <div className="title-text">
-              <h4>Nuevo Cliente</h4>
-              <span>Ingresa los datos del cliente</span>
-            </div>
-          </div>
+          <h4 className="modal-title">
+            <i className="bi bi-clipboard-plus me-2"></i>
+            Nuevo cliente
+          </h4>
           <button className="btn-close-custom" onClick={handleClose}>
             <i className="bi bi-x-lg"></i>
           </button>

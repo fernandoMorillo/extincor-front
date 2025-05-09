@@ -1,16 +1,21 @@
-/* ModalCrearInsumos.css */
+
 .btn-crear-insumo {
-  background: linear-gradient(182deg, rgba(244, 98, 99, 1) 0%, rgba(220, 53, 69, 1) 100%);
+  background: linear-gradient(135deg, #6B73FF 0%, #000DFF 100%);
   border: none;
-  padding: 0.7rem 1.5rem;
-  border-radius: 8px;
+  padding: 0.8rem 1.5rem;
+  border-radius: 12px;
   font-weight: 500;
-  transition: transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 13, 255, 0.2);
 }
 
 .btn-crear-insumo:hover {
   transform: translateY(-2px);
-  background: linear-gradient(182deg, rgba(220, 53, 69, 1) 0%, rgba(244, 98, 99, 1) 100%);
+  box-shadow: 0 6px 20px rgba(0, 13, 255, 0.3);
+  background: linear-gradient(135deg, #000DFF 0%, #6B73FF 100%);
 }
 
 .modal-insumo .modal-content {
@@ -21,12 +26,11 @@
 }
 
 .modal-header-custom {
-  background: linear-gradient(182deg, rgba(244, 98, 99, 1) 0%, rgba(220, 53, 69, 1) 100%);
+  background: linear-gradient(135deg, #6B73FF 0%, #000DFF 100%);
   padding: 1.5rem;
-  border-radius: 16px 16px 0 0;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .modal-title {
@@ -46,8 +50,8 @@
 }
 
 .btn-close-custom:hover {
-  opacity: 1;
-  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(90deg);
 }
 
 .modal-body-custom {

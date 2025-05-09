@@ -6,7 +6,7 @@ body {
 
 .main-container {
   display: grid;
-  grid-template-columns: 330px 1fr;
+  grid-template-columns: 280px 1fr;
   grid-template-rows: auto 1fr;
   grid-template-areas:
     "main-container--sidebard main-container--navbar"
@@ -28,14 +28,14 @@ body {
 
 .main-container--main {
   grid-area: main-container--main;
-  padding: 50px;
+  margin: 25px;
   display: flex;
   flex-direction: column;
 }
 
 .main-container--main--content {
   flex: 1;
-  padding: 50px;
+  padding: 0;
   border-radius: 13px;
   box-shadow: 2px 2px 8px 5px #0000002b;
   overflow-y: auto;

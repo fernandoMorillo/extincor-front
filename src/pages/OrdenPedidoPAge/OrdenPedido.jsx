@@ -1,40 +1,67 @@
 import React, { useState } from "react";
-import { Card, CardBody, Container, Row, Col, Form } from "react-bootstrap";
-
-import ModalCrearOrdenPedido from "../../components/Modals/ModalCrearOrdenPedido.jsx";
-import OrdenesTable from "../../components/Tablas/OrdenesTable.jsx";
+import { Container } from "react-bootstrap";
+import ModalCrearOrdenPedido from "../../components/Modals/ModalCrearOrdenPedido/ModalCrearOrdenPedido.jsx";
+import OrdenesTable from "../../components/Tablas/TablaOrdenes/OrdenesTable.jsx";
+import { useAuth } from "../../hooks/useAuth.js";
 import "./OrdenPedido.css";
 
 const OrdenPedido = () => {
-  const tipoUsuario = localStorage.getItem("role");
-  const [ordenesActualizadas, setOrdenesActualizadas] = useState(false);
-
-  const handleOrdenCreada = () => {
-    setOrdenesActualizadas((prev) => !prev);
-  };
+  const role = useAuth();
 
   return (
-    <section>
-      <Container>
-        {tipoUsuario !== '"CLIENTE"' && (
-          <Card>
-            <CardBody>
-              <Row>
-                <Col className="section--options">
-                  <ModalCrearOrdenPedido onOrdenCreada={handleOrdenCreada} />
-                </Col>
-              </Row>
-            </CardBody>
-          </Card>
-        )}
+      <div className="orden-pedido-container">
+        <Container fluid>
+          <div className="page-header">
+            <div className="header-content">
+              <h1 className="page-title">
+                <i className="bi bi-clipboard-check me-2"></i>
+                Órdenes de Pedido
+              </h1>
+              <p className="page-description">
+                Gestiona y monitorea todas las órdenes de pedido en el sistema
+              </p>
+            </div>
+            {role.isAdmin && (
+                <div className="header-actions">
+                  <div className="stats-cards">
+                    <div className="stat-card">
+                      <div className="stat-icon pending">
+                        <i className="bi bi-hourglass"></i>
+                      </div>
+                      <div className="stat-info">
+                        <span className="stat-value">12</span>
+                        <span className="stat-label">Pendientes</span>
+                      </div>
+                    </div>
+                    <div className="stat-card">
+                      <div className="stat-icon progress">
+                        <i className="bi bi-gear"></i>
+                      </div>
+                      <div className="stat-info">
+                        <span className="stat-value">5</span>
+                        <span className="stat-label">En Proceso</span>
+                      </div>
+                    </div>
+                    <div className="stat-card">
+                      <div className="stat-icon completed">
+                        <i className="bi bi-check-circle"></i>
+                      </div>
+                      <div className="stat-info">
+                        <span className="stat-value">28</span>
+                        <span className="stat-label">Completadas</span>
+                      </div>
+                    </div>
+                  </div>
 
-        <Card className="mt-4">
-          <CardBody>
-            <OrdenesTable actualizar={ordenesActualizadas} />
-          </CardBody>
-        </Card>
-      </Container>
-    </section>
+                </div>
+            )}
+          </div>
+
+          <div className="content-section">
+            <OrdenesTable />
+          </div>
+        </Container>
+      </div>
   );
 };
 

@@ -1,28 +1,31 @@
 import React from "react";
-import { Card, Container, CardBody, Row, Col } from "react-bootstrap";
+import {Card, Container, CardBody, Row, Col} from "react-bootstrap";
 
-import InsumosTable from "../../components/Tablas/InsumosTable";
+import InsumosTable from "../../components/Tablas/TablaInsumos/InsumosTable.jsx";
+import ModalCrearInsumo from "../../components/Modals/ModalCrearInsumo/ModalCrearInsumos.jsx";
 
 const InsumosPage = () => {
-  return (
-    <section>
-      <Container>
-        <Card>
-          <CardBody>
-            <Row>
-              <Col>Modal crear insumo</Col>
-            </Row>
-          </CardBody>
-        </Card>
+    return (
+        <section>
+            <Container>
+                <div className="page-header">
+                    <div className="header-content">
+                        <h1 className="page-title">
+                            <i className="bi bi-clipboard-check me-2"></i>
+                            Insumos
+                        </h1>
+                        <p className="page-description">
+                            Gestiona y monitorea todos los insumos en el sistema
+                        </p>
+                    </div>
+                </div>
 
-        <Card className="mt-4">
-          <CardBody>
-            <InsumosTable />
-          </CardBody>
-        </Card>
-      </Container>
-    </section>
-  );
+                <div className="content-section">
+                    <InsumosTable/>
+                </div>
+            </Container>
+        </section>
+    );
 };
 
 export default InsumosPage;

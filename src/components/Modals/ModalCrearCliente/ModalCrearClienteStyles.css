@@ -1,4 +1,4 @@
-/* ModalCrearCliente.css */
+
 .btn-crear-cliente {
   background: linear-gradient(135deg, #6B73FF 0%, #000DFF 100%);
   border: none;
@@ -59,12 +59,13 @@
 }
 
 .title-text {
-  color: white;
+  color: white !important;
 }
 
 .title-text h4 {
   margin: 0;
   font-weight: 600;
+  color: white !important;
 }
 
 .title-text span {
