@@ -1,0 +1,209 @@
+/* Estilos para el botón de crear operador */
+.btn-crear-operador {
+    background-color: #0d6efd;
+    border: none;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-crear-operador:hover {
+    background-color: #0b5ed7;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para el modal */
+.modal-operador .modal-content {
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Header del modal */
+.modal-header-custom {
+    padding: 20px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.modal-title-custom {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+    width: 100%;
+}
+
+.title-icon {
+    background-color: #e7f1ff;
+    color: #0d6efd;
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.title-text h4 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.title-text span {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.btn-close-custom {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #6c757d;
+    font-size: 1.1rem;
+    padding: 5px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.btn-close-custom:hover {
+    color: #dc3545;
+}
+
+/* Cuerpo del modal */
+.modal-body-custom {
+    padding: 20px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.input-with-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-with-icon i {
+    position: absolute;
+    left: 12px;
+    color: #6c757d;
+}
+
+.input-with-icon input,
+.input-with-icon select {
+    padding-left: 35px;
+    height: 42px;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    width: 100%;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-with-icon input:focus,
+.input-with-icon select:focus {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+    outline: none;
+}
+
+/* Footer del modal */
+.modal-footer-custom {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 20px;
+    border-top: 1px solid #e9ecef;
+}
+
+.btn-cancelar {
+    background-color: #6c757d;
+    border: none;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.btn-guardar {
+    background-color: #198754;
+    border: none;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.btn-cancelar:hover {
+    background-color: #5a6268;
+}
+
+.btn-guardar:hover {
+    background-color: #157347;
+}
+
+/* Estilos para el estado de carga */
+.btn-guardar:disabled {
+    background-color: #198754;
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+/* Estilos para el select personalizado */
+.select-custom {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-title-custom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .btn-close-custom {
+        top: 10px;
+        transform: none;
+    }
+}
