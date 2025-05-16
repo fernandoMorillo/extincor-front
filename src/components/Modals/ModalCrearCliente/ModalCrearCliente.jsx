@@ -12,7 +12,7 @@ const ModalCrearCliente = () => {
     direccion: "",
     correo: "",
     telefono: "",
-    tipo_cliente: "",
+    tipoCliente: "",
   });
 
   const handleClose = () => setIsOpen(false);
@@ -57,7 +57,7 @@ const ModalCrearCliente = () => {
         setCliente({
           nombre: "",
           correo: "",
-          tipo_cliente: "",
+          tipoCliente: "",
           telefono: "",
           direccion: "",
         });
@@ -150,8 +150,8 @@ const ModalCrearCliente = () => {
                 <div className="input-with-icon">
                   <i className="bi bi-building"></i>
                   <Form.Select
-                    name="tipo_cliente"
-                    value={cliente.tipo_cliente}
+                    name="tipoCliente"
+                    value={cliente.tipoCliente}
                     onChange={obtenerDatosCliente}
                     className="select-custom"
                   >

@@ -10,6 +10,8 @@ import {
 } from "react-bootstrap";
 import { useCompraStore } from "../../store/useCompraStore";
 
+import Swal from "sweetalert2";
+
 import "./CompraInsumosStyles.css";
 
 const CompraInsumos = () => {

@@ -25,7 +25,7 @@ const ModalCrearOrdenPedido = ({ onOrdenCreada }) => {
     estadoPedido: "Inactivo",
     montoTotal: "",
     administrador_id: 1,
-    cliente: { id: 0 },
+    clienteId: 0,
     observacion: "",
     tipoServicio: "recarga",
     cantidadExtintores: 1,
@@ -63,7 +63,7 @@ const ModalCrearOrdenPedido = ({ onOrdenCreada }) => {
     if (name === "cliente") {
       setOrdenPedidoInfo({
         ...ordenPedidoInfo,
-        cliente: { id: parseInt(value) },
+        clienteId: value,
       });
     } else {
       setOrdenPedidoInfo({ ...ordenPedidoInfo, [name]: value });
@@ -79,7 +79,7 @@ const ModalCrearOrdenPedido = ({ onOrdenCreada }) => {
       estadoPedido,
       montoTotal,
       administrador_id,
-      cliente,
+      clienteId,
       tipoServicio,
       cantidadExtintores,
     } = ordenPedidoInfo;
@@ -90,7 +90,7 @@ const ModalCrearOrdenPedido = ({ onOrdenCreada }) => {
         !estadoPedido.trim() ||
         !montoTotal.toString().trim() ||
         !administrador_id ||
-        !cliente.id ||
+        !clienteId ||
         !tipoServicio
     ) {
       Swal.fire({
@@ -125,7 +125,7 @@ const ModalCrearOrdenPedido = ({ onOrdenCreada }) => {
     try {
       const token = localStorage.getItem("token");
 
-      await apiOrdenPedido.post("/ordenes", ordenBase, {
+      await apiOrdenPedido.post("/ordenes-pedido", ordenBase, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -137,7 +137,7 @@ const ModalCrearOrdenPedido = ({ onOrdenCreada }) => {
         estadoPedido: "Inactivo",
         montoTotal: "",
         administrador_id: 1,
-        cliente: { id: 0 },
+        clienteId: 0,
         observacion: "",
         tipoServicio: "",
         cantidadExtintores: 1,
@@ -319,13 +319,13 @@ const ModalCrearOrdenPedido = ({ onOrdenCreada }) => {
                       <i className="bi bi-person-badge"></i>
                       <Form.Select
                           name="cliente"
-                          value={ordenPedidoInfo.cliente.id}
+                          value={ordenPedidoInfo.cliente?.id}
                           onChange={guardarOrden}
                           className="select-custom"
                       >
                         <option value="">Seleccione un cliente</option>
                         {clientes.map((cliente) => (
-                            <option key={cliente.id} value={cliente.id}>
+                            <option key={cliente?.id} value={cliente?.id}>
                               {cliente.nombre}
                             </option>
                         ))}

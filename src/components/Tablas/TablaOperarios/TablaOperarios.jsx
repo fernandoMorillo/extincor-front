@@ -23,7 +23,7 @@ const TablaOperarios = () => {
             setError(null);
 
             try {
-                const response = await  apiOperarios.get('/operarios', {
+                const response = await  apiOperarios.get('/operadores', {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`,
                     },

@@ -31,7 +31,7 @@ const Envase = () => {
     }
 
     try {
-      const response = await apiEnvase.post("/envaces", envaseInfo);
+      const response = await apiEnvase.post("/envases", envaseInfo);
       if (response.status === 201 || response.status === 200) {
         Swal.fire({
           icon: 'success',

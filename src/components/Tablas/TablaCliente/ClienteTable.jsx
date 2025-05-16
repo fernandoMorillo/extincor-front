@@ -23,7 +23,7 @@ const ClienteTable = () => {
         direccion: "",
         correo: "",
         telefono: "",
-        tipo_cliente: "",
+        tipoCliente: "",
     });
 
     useEffect(() => {
@@ -122,7 +122,7 @@ const ClienteTable = () => {
                         </div>
                         <div className="stat-info">
               <span className="stat-value">
-                {clientes.filter(c => c.tipo_cliente === 'empresa').length}
+                {clientes.filter(c => c.tipoCliente === 'empresa').length}
               </span>
                             <span className="stat-label">Empresas</span>
                         </div>
@@ -133,7 +133,7 @@ const ClienteTable = () => {
                         </div>
                         <div className="stat-info">
               <span className="stat-value">
-                {clientes.filter(c => c.tipo_cliente === 'independiente').length}
+                {clientes.filter(c => c.tipoCliente === 'independiente').length}
               </span>
                             <span className="stat-label">Independientes</span>
                         </div>
@@ -192,13 +192,13 @@ const ClienteTable = () => {
                                         </div>
                                     </td>
                                     <td>
-                      <span className={`tipo-badge ${cliente.tipo_cliente}`}>
-                        {cliente.tipo_cliente === 'empresa' ? (
+                      <span className={`tipo-badge ${cliente.tipoCliente}`}>
+                        {cliente.tipoCliente === 'empresa' ? (
                             <i className="bi bi-building me-1"></i>
                         ) : (
                             <i className="bi bi-person me-1"></i>
                         )}
-                          {cliente.tipo_cliente}
+                          {cliente.tipoCliente}
                       </span>
                                     </td>
                                     <td>
@@ -304,8 +304,8 @@ const ClienteTable = () => {
                                 <div className="input-with-icon">
                                     <i className="bi bi-person-badge"></i>
                                     <Form.Select
-                                        name="tipo_cliente"
-                                        value={clienteEdit.tipo_cliente}
+                                        name="tipoCliente"
+                                        value={clienteEdit.tipoCliente}
                                         onChange={handleChange}
                                         className="select-custom"
                                     >

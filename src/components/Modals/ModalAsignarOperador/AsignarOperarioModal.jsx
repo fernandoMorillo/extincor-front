@@ -14,7 +14,7 @@ const AsignarOperarioModal = ({ show, handleClose, ordenId, onAsignar, currentOp
     useEffect(() => {
         const fetchOperarios = async () => {
             try {
-                const response = await apiOrdenesCliente.get('/operarios', {
+                const response = await apiOrdenesCliente.get('/operadores', {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`,
                     },

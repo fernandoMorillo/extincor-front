@@ -4,7 +4,7 @@ export const useAuth = () => {
   const role = localStorage.getItem("role")?.toUpperCase() || "";
 
   const isAdmin = role === '"ADMINISTRADOR"';
-  const isOperario = role === '"OPERARIO"';
+  const isOperario = role === '"OPERADOR"';
   const isCliente = role === '"CLIENTE"';
   const isAuthenticated = role !== "";
 

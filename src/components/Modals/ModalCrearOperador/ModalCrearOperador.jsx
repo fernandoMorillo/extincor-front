@@ -46,7 +46,7 @@ const ModalCrearOperador = () => {
         }
 
         try {
-            const response = await apiOperarios.post("/operarios", operadores, {
+            const response = await apiOperarios.post("/operadores", operadores, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
                 },
