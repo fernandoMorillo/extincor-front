@@ -36,7 +36,7 @@ const CompraInsumos = () => {
     fecha_compra: new Date().toISOString().split("T")[0],
     monto: "",
     proveedor: "",
-    insumo_id: "",
+    insumoId: "",
     cantidadComprada: "",
   });
   useEffect(() => {
@@ -76,7 +76,7 @@ const CompraInsumos = () => {
       formData.detalle === "" ||
       formData.monto === "" ||
       formData.proveedor === "" ||
-      formData.insumo_id === "" ||
+      formData.insumoId === "" ||
       formData.cantidadComprada === ""
     ) {
       Swal.fire({
@@ -245,8 +245,8 @@ const CompraInsumos = () => {
                   <div className="input-with-icon">
                     <i className="bi bi-box-seam"></i>
                     <Form.Select
-                        name="insumo_id"
-                        value={formData.insumo_id}
+                        name="insumoId"
+                        value={formData.insumoId}
                         onChange={handleChange}
                         required
                         className="select-custom"

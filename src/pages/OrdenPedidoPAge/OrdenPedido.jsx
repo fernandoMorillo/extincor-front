@@ -21,40 +21,6 @@ const OrdenPedido = () => {
                 Gestiona y monitorea todas las órdenes de pedido en el sistema
               </p>
             </div>
-            {role.isAdmin && (
-                <div className="header-actions">
-                  <div className="stats-cards">
-                    <div className="stat-card">
-                      <div className="stat-icon pending">
-                        <i className="bi bi-hourglass"></i>
-                      </div>
-                      <div className="stat-info">
-                        <span className="stat-value">12</span>
-                        <span className="stat-label">Pendientes</span>
-                      </div>
-                    </div>
-                    <div className="stat-card">
-                      <div className="stat-icon progress">
-                        <i className="bi bi-gear"></i>
-                      </div>
-                      <div className="stat-info">
-                        <span className="stat-value">5</span>
-                        <span className="stat-label">En Proceso</span>
-                      </div>
-                    </div>
-                    <div className="stat-card">
-                      <div className="stat-icon completed">
-                        <i className="bi bi-check-circle"></i>
-                      </div>
-                      <div className="stat-info">
-                        <span className="stat-value">28</span>
-                        <span className="stat-label">Completadas</span>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-            )}
           </div>
 
           <div className="content-section">

@@ -3,6 +3,7 @@ import { Button, Form, Modal } from "react-bootstrap";
 import apiInsumos from "../../../utils/axiosConfig.js";
 import Swal from "sweetalert2";
 import "../ModalCrearInsumo/ModalCrearInsumosStyles.css";
+import TipoExtintorSelect from "../../SelecExtintor/TipoExtintorSelect.jsx";
 
 const ModalCrearInsumos = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,6 +15,7 @@ const ModalCrearInsumos = () => {
     unidades: "",
     precioUnitario: "",
     fechaIngreso: "",
+    tiposExtintor: "",
   });
 
   const handleClose = () => setIsOpen(false);
@@ -40,8 +42,15 @@ const ModalCrearInsumos = () => {
       return;
     }
 
+    const fechaIngreso = new Date(insumos.fechaIngreso).toISOString();
+    const semdInfo = {
+      ...insumos,
+      fechaIngreso: fechaIngreso,
+    };
+
+
     try {
-      const response = await apiInsumos.post("/insumos", insumos, {
+      const response = await apiInsumos.post("/insumos", semdInfo, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -55,6 +64,7 @@ const ModalCrearInsumos = () => {
           unidades: "",
           precioUnitario: "",
           fechaIngreso: "",
+          tiposExtintor: "",
         });
 
         Swal.fire({
@@ -78,6 +88,13 @@ const ModalCrearInsumos = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const setTipoExtintor = (valorSeleccionado) => {
+    setInsumos((prev) => ({
+      ...prev,
+      tiposExtintor: valorSeleccionado,
+    }));
   };
 
   return (
@@ -120,6 +137,8 @@ const ModalCrearInsumos = () => {
                     />
                   </div>
                 </Form.Group>
+
+                <TipoExtintorSelect onChange={setTipoExtintor} value={insumos.tiposExtintor} />
 
                 <Form.Group className="form-group">
                   <Form.Label>Stock Mínimo</Form.Label>

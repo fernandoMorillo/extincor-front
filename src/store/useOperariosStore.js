@@ -6,7 +6,7 @@ const useOperariosStore = create((set) => ({
     operarios: [],
     cargarOperarios: async () => {
         try {
-            const response = await apiOperarios.get("/operarios",
+            const response = await apiOperarios.get("/operadores",
                 {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`,

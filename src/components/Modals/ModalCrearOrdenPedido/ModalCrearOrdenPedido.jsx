@@ -12,6 +12,7 @@ import apiOrdenPedido from "../../../utils/axiosConfig.js";
 import Swal from "sweetalert2";
 
 import "./ModalCrearOrdenPedidoStyles.css";
+import TipoExtintorSelect from "../../SelecExtintor/TipoExtintorSelect.jsx";
 
 const ModalCrearOrdenPedido = ({ onOrdenCreada }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,9 +29,15 @@ const ModalCrearOrdenPedido = ({ onOrdenCreada }) => {
     clienteId: 0,
     observacion: "",
     tipoServicio: "recarga",
-    cantidadExtintores: 1,
+    cantidad: 1,
+    tipoExtintor: "",
+    horaEntrega: "",
   });
 
+  const [fechaEntregaSelec, setFechaEntregaSelec] = useState("");
+  const [ordenesEnFecha, setOrdenesEnFecha] = useState(0);
+  const LIMITE_ORDENES_DIA = 5;
+  const token = localStorage.getItem("token");
   useEffect(() => {
     if (isOpen) {
       const hoy = new Date().toISOString().split('T')[0];
@@ -70,22 +77,30 @@ const ModalCrearOrdenPedido = ({ onOrdenCreada }) => {
     }
   };
 
+  const setTipoExtintor = (valorSeleccionado) => {
+    setOrdenPedidoInfo((prev) => ({
+      ...prev,
+      tipoExtintor: valorSeleccionado,
+    }));
+  };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const {
-      fechaEntrega,
+
       fechaPedido,
       estadoPedido,
       montoTotal,
       administrador_id,
       clienteId,
       tipoServicio,
-      cantidadExtintores,
+      cantidad,
     } = ordenPedidoInfo;
 
     if (
-        !fechaEntrega.trim() ||
+
         !fechaPedido.trim() ||
         !estadoPedido.trim() ||
         !montoTotal.toString().trim() ||
@@ -102,7 +117,8 @@ const ModalCrearOrdenPedido = ({ onOrdenCreada }) => {
     }
 
     if (tipoServicio === "venta") {
-      if (!cantidadExtintores || cantidadExtintores < 1) {
+      console.log("entrnado aqui");
+      if (!cantidad || cantidad < 1) {
         Swal.fire({
           icon: "error",
           title: "Cantidad inválida",
@@ -110,10 +126,20 @@ const ModalCrearOrdenPedido = ({ onOrdenCreada }) => {
         });
         return;
       }
+
+      else if (cantidad > 10) {
+        Swal.fire({
+          icon: "error",
+          title: "Cantidad inválida",
+          text: "No se pueden vender más de 10 extintores a la vez.",
+        });
+
+        return ;
+      }
     }
 
     const fechaPedidoISO = new Date(fechaPedido).toISOString();
-    const fechaEntregaISO = new Date(fechaEntrega).toISOString();
+    const fechaEntregaISO = new Date(fechaEntregaSelec).toISOString();
 
     const ordenBase = {
       ...ordenPedidoInfo,
@@ -140,7 +166,7 @@ const ModalCrearOrdenPedido = ({ onOrdenCreada }) => {
         clienteId: 0,
         observacion: "",
         tipoServicio: "",
-        cantidadExtintores: 1,
+        cantidad: 1,
       });
 
       setIsOpen(false);
@@ -169,6 +195,36 @@ const ModalCrearOrdenPedido = ({ onOrdenCreada }) => {
 
   const handleClose = () => setIsOpen(false);
   const handleShow = () => setIsOpen(true);
+
+  const verificarOrdenesPorFecha = async (fechaSeleccionada) => {
+    try {
+      const response = await apiOrdenPedido.get(
+          `/ordenes-pedido/count-by-fecha-entrega`,
+          {
+            params: { fecha: fechaSeleccionada },
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+      );
+      const cantidad = response.data;
+      setFechaEntregaSelec(cantidad);
+
+      if (cantidad >= LIMITE_ORDENES_DIA) {
+        Swal.fire({
+          icon: "warning",
+          title: "Límite alcanzado",
+          text: `Ya hay ${cantidad} órdenes para el día seleccionado. Selecciona otra fecha.`,
+          confirmButtonColor: "#ffc107",
+        });
+        setFechaEntregaSelec(""); // Limpia la fecha
+      } else {
+        setFechaEntregaSelec(fechaSeleccionada);
+      }
+    } catch (error) {
+      console.error("Error al verificar órdenes:", error);
+    }
+  };
 
   return (
       <>
@@ -225,11 +281,33 @@ const ModalCrearOrdenPedido = ({ onOrdenCreada }) => {
                         <Form.Control
                             type="date"
                             name="fechaEntrega"
-                            value={ordenPedidoInfo.fechaEntrega}
+                            value={fechaEntregaSelec}
+                            onChange={(e) => verificarOrdenesPorFecha(e.target.value)}
+                            required
+                        />
+
+                        {ordenesEnFecha > 0 && fechaEntregaSelec && (
+                            <Form.Text muted>
+                              Ya hay {ordenesEnFecha} órdenes para esta fecha.
+                            </Form.Text>
+                        )}
+                      </div>
+                    </Form.Group>
+
+                    <Form.Group controlId="formHoraEntrega">
+                      <Form.Label>Hora de Entrega</Form.Label>
+                      <div className="input-with-icon">
+                        <i className="bi bi-calendar-check"></i>
+                        <Form.Control
+                            type="time"
+                            name="horaEntrega"
+                            value={ordenPedidoInfo.horaEntrega}
                             onChange={guardarOrden}
                         />
                       </div>
+
                     </Form.Group>
+
                   </div>
                 </div>
 
@@ -255,20 +333,28 @@ const ModalCrearOrdenPedido = ({ onOrdenCreada }) => {
                   </Form.Group>
 
                   {ordenPedidoInfo.tipoServicio === "venta" && (
-                      <Form.Group controlId="formCantidadExtintores" className="mt-3">
+                      <Form.Group controlId="formcantidad" className="mt-3">
                         <Form.Label>Cantidad de Extintores</Form.Label>
                         <div className="input-with-icon">
                           <i className="bi bi-123"></i>
                           <Form.Control
-                              name="cantidadExtintores"
+                              name="cantidad"
                               type="number"
                               min={1}
-                              value={ordenPedidoInfo.cantidadExtintores}
+                              value={ordenPedidoInfo.cantidad}
                               onChange={guardarOrden}
                           />
                         </div>
                       </Form.Group>
                   )}
+                </div>
+
+                <div className="form-section">
+                  <h5 className="section-title">
+                    <i className="bi bi-tools me-2"></i>
+                    Tipo de extintor de { ordenPedidoInfo.tipoServicio === "recarga" ? "recarga" : "venta" }
+                  </h5>
+                  <TipoExtintorSelect onChange={setTipoExtintor} value={ordenPedidoInfo.tipoExtintor} />
                 </div>
 
 

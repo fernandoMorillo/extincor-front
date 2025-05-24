@@ -4,7 +4,7 @@ import apiCliente from "../../../utils/axiosConfig.js";
 import Swal from "sweetalert2";
 import "./ModalCrearClienteStyles.css";
 
-const ModalCrearCliente = () => {
+const ModalCrearCliente = ({ onClienteCreado }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [cliente, setCliente] = useState({
@@ -61,6 +61,9 @@ const ModalCrearCliente = () => {
           telefono: "",
           direccion: "",
         });
+        if (onClienteCreado) {
+          onClienteCreado();
+        }
         handleClose();
       }
     } catch (error) {

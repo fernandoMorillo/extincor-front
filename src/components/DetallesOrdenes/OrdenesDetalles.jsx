@@ -36,6 +36,7 @@ const OrdenesDetalles = () => {
 
     const [selectedInsumo, setSelectedInsumo] = useState("");
     const [cantidad, setCantidad] = useState(1);
+    const [insumoOrden, setInsumoOrden] = useState(null);
 
 
     const token = localStorage.getItem("token");
@@ -75,7 +76,7 @@ const OrdenesDetalles = () => {
     const fetchInsumos = async () => {
         setInsumosLoading(true);
         try {
-            const response = await apiOrdenesCliente.get("/insumos", {
+            const response = await apiOrdenesCliente.get(`/insumos/tipo/${orden.tipoExtintor}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -152,9 +153,9 @@ const OrdenesDetalles = () => {
         try {
 
             await apiOrdenesCliente.post(
-                `ordenes/${id}/producciones/${orden?.produccion.id}/insumos`,
+                `ordenes-pedido/${id}/producciones/${orden?.produccionId}/insumos`,
                 selectedInsumos.map(insumo => ({
-                    id: insumo.insumoId,
+                    insumoId: insumo.insumoId,
                     cantidad: insumo.cantidad,
                 })),
                 {
@@ -166,7 +167,7 @@ const OrdenesDetalles = () => {
 
 
             await apiOrdenesCliente.put(
-                `/ordenes/${id}/estado`,
+                `ordenes-pedido/${id}/estado`,
                 {
                     estadoPedido: "En Proceso",
                 },
@@ -191,8 +192,22 @@ const OrdenesDetalles = () => {
     const handleStartProduction = async () => {
         try {
             const response = await apiOrdenesCliente.post(
-                `producciones/${id}/iniciar-produccion`,
-                {ordenId: id},
+                `produccion/${id}/iniciar-produccion`,
+                {
+                    ordenPedidoId: id,
+                    operarioId: orden?.operarioId,
+                    fechaInicio: new Date(),
+                    fechaFin: new Date(),
+                    estadoProduccion: "En Proceso",
+                    estado: "En Proceso",
+                    estadoPedido: "En Proceso",
+                    observacion: "",
+                    insumos: selectedInsumos.map(insumo => ({
+                        id: insumo.insumoId,
+                        cantidad: insumo.cantidad,
+                    })),
+
+                },
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -218,10 +233,11 @@ const OrdenesDetalles = () => {
 
     const handleCompleteRecharge = async () => {
         try {
-            await apiOrdenesCliente.put(
-                `/ordenes/${id}/estado`,
+            await apiOrdenesCliente.post(
+                `/ordenes-pedido/finalizar-orden/${id}`,
                 {
-                    estadoPedido: "Completado",
+                    nombreCliente: orden.clienteNombre,
+                    correoCliente: orden.clienteEmail,
                 },
                 {
                     headers: {
@@ -242,6 +258,45 @@ const OrdenesDetalles = () => {
             );
         }
     };
+
+    useEffect(() => {
+        const fetchInsumosProduccion = async () => {
+            if (!orden?.insumosProduccion || orden.insumosProduccion.length === 0) return;
+
+            try {
+                const ids = orden.insumosProduccion.map(insumo => insumo.insumoId);
+                const responses = await Promise.all(
+                    ids.map(id =>
+                        apiOrdenesCliente.get(`/insumos/${id}`, {
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                            },
+                        })
+                    )
+                );
+
+                const insumosData = responses.map(res => res.data);
+
+                // Combinar con las cantidades
+                const insumosConCantidad = orden.insumosProduccion.map(item => {
+                    const detalles = insumosData.find(ins => ins.id === item.insumoId);
+                    return {
+                        ...detalles,
+                        cantidad: item.cantidad,
+                    };
+                });
+
+                setInsumoOrden(insumosConCantidad);
+            } catch (err) {
+                console.error("Error al cargar los datos de los insumos de la producción:", err);
+            }
+        };
+
+        if (orden) {
+            fetchInsumosProduccion();
+        }
+    }, [orden, token]);
+
 
     if (loading) {
         return (
@@ -323,7 +378,7 @@ const OrdenesDetalles = () => {
                     <div className="info-grid">
                         <div className="info-item">
                             <div className="info-label">Cliente</div>
-                            <div className="info-value">{orden.cliente?.nombre || "Sin cliente"}</div>
+                            <div className="info-value">{orden.clienteNombre || "Sin cliente"}</div>
                         </div>
                         <div className="info-item">
                             <div className="info-label">Fecha de Entrega</div>
@@ -356,21 +411,23 @@ const OrdenesDetalles = () => {
 
                 <Card className="info-card">
                     <h4 className="mb-4">Insumos de la Orden</h4>
-                    {orden.insumosUtilizados && orden.insumosUtilizados.length > 0 ? (
+                    {insumoOrden && insumoOrden.length > 0 ? (
                         <Table className="custom-table-insumos" hover>
                             <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Insumo</th>
+                                <th>Tipo extintor</th>
                                 <th>Cantidad</th>
                                 <th>Precio Unitario</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {orden.insumosUtilizados.map((detalle, index) => (
+                            {insumoOrden.map((detalle, index) => (
                                 <tr key={detalle.id || index}>
                                     <td>{index + 1}</td>
                                     <td>{detalle.nombre || "Insumo desconocido"}</td>
+                                    <td>{ detalle.tiposExtintor || "Sin tipo extintor" }</td>
                                     <td>{detalle.cantidad}</td>
                                     <td>
                                         {new Intl.NumberFormat("es-CL", {
@@ -391,7 +448,7 @@ const OrdenesDetalles = () => {
 
                     <div className="action-buttons">
                         <Button
-                            disabled={orden?.produccion}
+                            disabled={orden?.produccionId || !orden?.operarioId }
                             className="btn-custom"
                             variant="warning"
                             onClick={handleStartProduction}
@@ -406,7 +463,7 @@ const OrdenesDetalles = () => {
                             className="btn-custom"
                             variant="outline-primary"
                             onClick={handleOpenModal}
-                            disabled={orden.estadoPedido === "Completado"}
+                            disabled={orden.estadoPedido === "FINALIZADA"}
                         >
                             <i className="bi bi-plus-circle"></i>
                             Seleccionar Insumos
@@ -415,7 +472,7 @@ const OrdenesDetalles = () => {
                             className="btn-custom"
                             variant="success"
                             onClick={() => setShowRechargeModal(true)}
-                            disabled={orden.estadoPedido === "Completado"}
+                            disabled={orden.estadoPedido === "FINALIZADA"}
                         >
                             <i className="bi bi-arrow-repeat"></i>
                             Iniciar Recarga

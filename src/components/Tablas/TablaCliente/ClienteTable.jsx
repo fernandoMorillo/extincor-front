@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
     Container,
     Spinner,
@@ -8,15 +8,17 @@ import {
     Form,
 } from "react-bootstrap";
 import apiCliente from "../../../utils/axiosConfig.js";
-
 import "./ClienteDashboardStyles.css";
 import ModalCrearCliente from "../../Modals/ModalCrearCliente/ModalCrearCliente.jsx";
+import Swal from "sweetalert2";
 
 const ClienteTable = () => {
     const [clientes, setClientes] = useState([]);
+    const [filteredClientes, setFilteredClientes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [showModal, setShowModal] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
     const [clienteEdit, setClienteEdit] = useState({
         id: "",
         nombre: "",
@@ -26,32 +28,135 @@ const ClienteTable = () => {
         tipoCliente: "",
     });
 
+    const fetchClientes = async () => {
+        try {
+            const response = await apiCliente.get("/clientes", {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+            });
+            setClientes(response.data);
+            setFilteredClientes(response.data);
+        } catch (error) {
+            setError("Error al cargar los datos de los clientes");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        const fetchClientes = async () => {
+        fetchClientes();
+    }, []);
+
+    useEffect(() => {
+        const debounceTimer = setTimeout(() => {
+            const filtered = clientes.filter(cliente =>
+                cliente.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                cliente.correo.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                cliente.telefono.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                cliente.tipoCliente.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            setFilteredClientes(filtered);
+        }, 300);
+
+        return () => clearTimeout(debounceTimer);
+    }, [searchTerm, clientes]);
+
+    const eliminarCliente = async (id) => {
+        const resultado = await Swal.fire({
+            title: '¿Estás seguro?',
+            text: "Esta acción no se puede deshacer.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        });
+        if (resultado.isConfirmed) {
             try {
-                const response = await apiCliente.get("/clientes", {
+                await apiCliente.delete(`/clientes/${id}`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`,
                     },
                 });
-                setClientes(response.data);
+                Swal.fire({
+                    icon: "success",
+                    title: "Cliente eliminado correctamente",
+                    background: "#fff",
+                    confirmButtonColor: "#28a745",
+                });
+                fetchClientes();
             } catch (error) {
-                setError("Error al cargar los datos de los clientes");
-            } finally {
-                setLoading(false);
+                Swal.fire({
+                    icon: "error",
+                    title: "Error al eliminar al cliente",
+                    text: "No se pudo eliminar el cliente, intente nuevamente.",
+                    background: "#fff",
+                    confirmButtonColor: "#dc3545",
+                });
+                setError("Error al eliminar el cliente");
             }
-        };
+        }
+    };
 
-        fetchClientes();
-    }, []);
+    const handleEdit = (cliente) => {
+        setClienteEdit(cliente);
+        setShowModal(true);
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setClienteEdit({ ...clienteEdit, [name]: value });
+    };
+
+    const handleSave = async () => {
+        const resultado = await Swal.fire({
+            title: '¿Estás seguro que deseas editar este cliente?',
+            text: "Esta acción no se puede deshacer.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, editar',
+            cancelButtonText: 'Cancelar'
+        });
+        if (resultado.isConfirmed) {
+            try {
+                await apiCliente.put(`/clientes/${clienteEdit.id}`, clienteEdit, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                });
+                Swal.fire({
+                    icon: "success",
+                    title: "Cliente actualizado correctamente",
+                    background: "#fff",
+                    confirmButtonColor: "#28a745",
+                });
+                fetchClientes();
+                setShowModal(false);
+            } catch (error) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error al actualizar al cliente",
+                    text: "No se pudo actualizar al cliente, intente nuevamente.",
+                    background: "#fff",
+                    confirmButtonColor: "#dc3545",
+                });
+                setError("Error al actualizar el cliente");
+            }
+        }
+    };
+
+    const handleVerDetalles = (id) => {
+        console.log("Ver detalles de cliente:", id);
+    };
 
     if (loading) {
         return (
-            <Container
-                className="d-flex justify-content-center align-items-center"
-                style={{height: "100vh"}}
-            >
-                <Spinner animation="border"/>
+            <Container className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+                <Spinner animation="border" />
             </Container>
         );
     }
@@ -64,82 +169,34 @@ const ClienteTable = () => {
         );
     }
 
-    const eliminarCliente = async (id) => {
-        try {
-            await apiCliente.delete(`/clientes/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-            });
-            setClientes(clientes.filter((cliente) => cliente.id !== id)); // Actualizar la lista
-        } catch (error) {
-            setError("Error al eliminar el cliente");
-        }
-    };
-
-    const handleEdit = (cliente) => {
-        setClienteEdit(cliente);
-        setShowModal(true);
-    };
-
-    const handleChange = (e) => {
-        const {name, value} = e.target;
-        setClienteEdit({...clienteEdit, [name]: value});
-    };
-
-    const handleSave = async () => {
-        try {
-            await apiCliente.post(`/clientes/${clienteEdit.id}`, clienteEdit, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-            });
-            setClientes(
-                clientes.map((c) => (c.id === clienteEdit.id ? clienteEdit : c))
-            );
-            setShowModal(false);
-        } catch (error) {
-            setError("Error al actualizar el cliente");
-        }
-    };
-
     return (
-        <div className="">
+        <div>
             <div className="dashboard-header">
                 <div className="stats-cards">
                     <div className="stat-card">
-                        <div className="stat-icon">
-                            <i className="bi bi-people"></i>
-                        </div>
+                        <div className="stat-icon"><i className="bi bi-people"></i></div>
                         <div className="stat-info">
                             <span className="stat-value">{clientes.length}</span>
                             <span className="stat-label">Total Clientes</span>
                         </div>
                     </div>
                     <div className="stat-card">
-                        <div className="stat-icon">
-                            <i className="bi bi-building"></i>
-                        </div>
+                        <div className="stat-icon"><i className="bi bi-building"></i></div>
                         <div className="stat-info">
-              <span className="stat-value">
-                {clientes.filter(c => c.tipoCliente === 'empresa').length}
-              </span>
+                            <span className="stat-value">{clientes.filter(c => c.tipoCliente === 'empresa').length}</span>
                             <span className="stat-label">Empresas</span>
                         </div>
                     </div>
                     <div className="stat-card">
-                        <div className="stat-icon">
-                            <i className="bi bi-person"></i>
-                        </div>
+                        <div className="stat-icon"><i className="bi bi-person"></i></div>
                         <div className="stat-info">
-              <span className="stat-value">
-                {clientes.filter(c => c.tipoCliente === 'independiente').length}
-              </span>
+                            <span className="stat-value">{clientes.filter(c => c.tipoCliente === 'independiente').length}</span>
                             <span className="stat-label">Independientes</span>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div className="cliente-container">
                 <div className="search-section">
                     <div className="search-bar">
@@ -147,12 +204,12 @@ const ClienteTable = () => {
                         <input
                             type="text"
                             placeholder="Buscar cliente..."
-                            onChange={(e) => {
-                            }}
+                            onChange={(e) => setSearchTerm(e.target.value)}
                         />
                     </div>
-                    <ModalCrearCliente className="btn-crear"/>
+                    <ModalCrearCliente onClienteCreado={fetchClientes} className="btn-crear" />
                 </div>
+
                 <div className="table-container">
                     <div className="table-responsive">
                         <table className="custom-table">
@@ -166,62 +223,38 @@ const ClienteTable = () => {
                             </tr>
                             </thead>
                             <tbody>
-                            {clientes.map((cliente) => (
+                            {filteredClientes.map((cliente) => (
                                 <tr key={cliente.id}>
                                     <td>
                                         <div className="cliente-info">
-                                            <div className="cliente-avatar">
-                                                {cliente.nombre.charAt(0).toUpperCase()}
-                                            </div>
+                                            <div className="cliente-avatar">{cliente.nombre.charAt(0).toUpperCase()}</div>
                                             <div className="cliente-detalles">
                                                 <span className="cliente-nombre">{cliente.nombre}</span>
                                                 <span className="cliente-correo">{cliente.correo}</span>
                                             </div>
                                         </div>
                                     </td>
+                                    <td><i className="bi bi-telephone"></i> {cliente.telefono}</td>
+                                    <td><i className="bi bi-geo-alt"></i> {cliente.direccion}</td>
                                     <td>
-                                        <div className="contacto-info">
-                                            <i className="bi bi-telephone"></i>
-                                            {cliente.telefono}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="ubicacion-info">
-                                            <i className="bi bi-geo-alt"></i>
-                                            {cliente.direccion}
-                                        </div>
-                                    </td>
-                                    <td>
-                      <span className={`tipo-badge ${cliente.tipoCliente}`}>
-                        {cliente.tipoCliente === 'empresa' ? (
-                            <i className="bi bi-building me-1"></i>
-                        ) : (
-                            <i className="bi bi-person me-1"></i>
-                        )}
-                          {cliente.tipoCliente}
-                      </span>
+                                            <span className={`tipo-badge ${cliente.tipoCliente}`}>
+                                                {cliente.tipoCliente === 'empresa' ? (
+                                                    <i className="bi bi-building me-1"></i>
+                                                ) : (
+                                                    <i className="bi bi-person me-1"></i>
+                                                )}
+                                                {cliente.tipoCliente}
+                                            </span>
                                     </td>
                                     <td>
                                         <div className="action-buttons">
-                                            <button
-                                                className="btn-action view"
-                                                onClick={() => handleVerDetalles(cliente.id)}
-                                                title="Ver detalles"
-                                            >
+                                            <button className="btn-action view" onClick={() => handleVerDetalles(cliente.id)} title="Ver detalles">
                                                 <i className="bi bi-eye-fill"></i>
                                             </button>
-                                            <button
-                                                className="btn-action edit"
-                                                onClick={() => handleEdit(cliente)}
-                                                title="Editar"
-                                            >
+                                            <button className="btn-action edit" onClick={() => handleEdit(cliente)} title="Editar">
                                                 <i className="bi bi-pencil-fill"></i>
                                             </button>
-                                            <button
-                                                className="btn-action delete"
-                                                onClick={() => eliminarCliente(cliente.id)}
-                                                title="Eliminar"
-                                            >
+                                            <button className="btn-action delete" onClick={() => eliminarCliente(cliente.id)} title="Eliminar">
                                                 <i className="bi bi-trash-fill"></i>
                                             </button>
                                         </div>
@@ -234,12 +267,12 @@ const ClienteTable = () => {
                 </div>
             </div>
 
-
+            {/* Modal de edición */}
             <Modal
                 show={showModal}
                 onHide={() => setShowModal(false)}
-                className="modal-cliente"
                 centered
+                className="custom-modal"
             >
                 <div className="modal-header-custom">
                     <h4 className="modal-title">
@@ -309,6 +342,7 @@ const ClienteTable = () => {
                                         onChange={handleChange}
                                         className="select-custom"
                                     >
+                                        <option value="">Seleccione tipo...</option>
                                         <option value="empresa">Empresa</option>
                                         <option value="independiente">Independiente</option>
                                     </Form.Select>

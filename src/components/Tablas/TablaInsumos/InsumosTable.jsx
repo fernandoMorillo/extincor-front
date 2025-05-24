@@ -62,6 +62,7 @@ const InsumosTable = () => {
           <thead>
             <tr>
               <th>Nombre</th>
+              <th>Tipo extintor</th>
               <th>Stock</th>
               <th>Cantidad</th>
               <th>Unidades</th>
@@ -79,6 +80,7 @@ const InsumosTable = () => {
                     {insumo.nombre}
                   </div>
                 </td>
+                <td>{insumo.tiposExtintor}</td>
                 <td>
                   <span className={`stock-badge ${insumo.stock < 10 ? 'low-stock' : ''}`}>
                     {insumo.stock}
