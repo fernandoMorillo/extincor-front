@@ -33,6 +33,7 @@ const OrdenesTable = ({actualizar}) => {
     const [showEditModal, setShowEditModal] = useState(false);
     const [selectedOrden, setSelectedOrden] = useState(null);
 
+    const [filteredOrdenes, setFilteredOrdenes] = useState([]);
 
     const role = useAuth();
     const token = localStorage.getItem("token");
@@ -98,6 +99,7 @@ const OrdenesTable = ({actualizar}) => {
             setTotalPages(data?.totalPages);
             setTotalElements(data?.totalElements);
             setCurrentPage(data.number);
+            setFilteredOrdenes(response.data.content);
         } catch (err) {
             setError("Error al cargar las órdenes.");
         } finally {
@@ -118,6 +120,19 @@ const OrdenesTable = ({actualizar}) => {
             setCurrentPage(page);
         }
     };
+    useEffect(() => {
+        const debounceTimer = setTimeout(() => {
+            const filteredOrdenes = ordenes.filter(orden =>
+                orden?.clienteNombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                orden?.tipoServicio.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                orden?.tipoExtintor.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                orden?.estadoPedido.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            setFilteredOrdenes(filteredOrdenes);
+        }, 300);
+
+        return () => clearTimeout(debounceTimer);
+    }, [searchTerm, ordenes]);
 
     const handleVerDetalles = (ordenId) => {
         navigate(`/home/orden-pedido/${ordenId}/detalles`);
@@ -392,7 +407,7 @@ const OrdenesTable = ({actualizar}) => {
                         </tr>
                         </thead>
                         <tbody>
-                        {ordenes.map((orden) => (
+                        {filteredOrdenes.map((orden) => (
                             <tr key={orden.id}>
                                 <td className="orden-numero">{orden.numeroPedido ?? 'Sin número de orden'}</td>
                                 <td>{orden.tipoServicio ?? "N/A"}</td>
