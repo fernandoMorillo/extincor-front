@@ -4,12 +4,13 @@
   left: 0;
   height: 100vh; /* altura completa de la ventana */
   width: 280px; /* o el ancho que quieras */
-  background: linear-gradient(182deg,rgba(244, 98, 99, 1) 0%, rgba(220, 53, 69, 1) 50%, rgba(237, 221, 83, 1) 100%);
+  background: white;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
   z-index: 1000; /* para estar por encima del contenido */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 

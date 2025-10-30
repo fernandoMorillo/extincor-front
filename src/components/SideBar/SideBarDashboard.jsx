@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLocation, Link } from "wouter";
 import { Button } from "react-bootstrap";
-import LoginExtincor from "../../assets/img/extincor-logo.png";
+import LoginExtincor from "../../assets/img/logo-extincor.png";
 import "../SideBar/SideBarDashboard.css";
 import { Logout } from "../../services/authService";
 import LoadingSpinner from "../Spinner/Spinner";

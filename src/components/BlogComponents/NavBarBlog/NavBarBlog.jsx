@@ -12,7 +12,7 @@ const NavBarBlog = () => {
       className="shadow-sm navbar--blog"
     >
       <Navbar.Brand href="#home" className="fw-bold">
-        Extincor SAS
+        Extincor
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="navbar-nav" />
       <Navbar.Collapse id="navbar-nav">
