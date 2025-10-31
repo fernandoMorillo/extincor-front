@@ -51,7 +51,7 @@ const NavbarDashboard = () => {
           </Dropdown.Toggle>
 
           <Dropdown.Menu align="end">
-            <Dropdown.Item onClick={() => navigate("/perfil")}>
+            <Dropdown.Item onClick={() => navigate("/home/perfil")}>
               Ver Perfil
             </Dropdown.Item>
             {role.isAdmin && (

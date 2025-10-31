@@ -19,6 +19,7 @@ body {
   background-color: #fc6868;
   height: 100%;
   min-height: 100vh;
+  box-shadow: 2px 2px 8px 5px #0000002b;
 }
 
 .main-container--navbar {

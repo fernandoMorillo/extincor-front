@@ -16,6 +16,7 @@ import CompraInsumos from "../Compras/CompraInsumos.jsx";
 import CrearOperarioForm from "../AsignarRoles/CrearOperarioForm.jsx";
 import AsignarRoles from "../AsignarRoles/AsignarRoles.jsx";
 import Estadisticas from "../Estadisticas/Estadisticas.jsx";
+import Profile from "../Profile/Profile.jsx";
 
 const HomeExtincor = () => {
   return (
@@ -42,6 +43,7 @@ const HomeExtincor = () => {
             />
               <Route path="/home/asignar-rol" component={AsignarRoles} />
               <Route path="/home/estadisticas" component={Estadisticas} />
+              <Route path="/home/perfil" component={Profile} />
             <Route component={NotFound}></Route>
           </Switch>
         </div>
