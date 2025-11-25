@@ -2,7 +2,7 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Route, Switch, Link } from "wouter";
 import "../App.css";
-import LoginExtincor from "./pages/Login/login";
+import LoginExtincor from "./pages/Login/Login.jsx";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import HomeExtincor from "./pages/Home/HomeExtincor";
 import Blog from "./pages/Blog/Blog";

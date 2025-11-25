@@ -32,14 +32,13 @@
 }
 
 .card-content {
-  background:  linear-gradient(54deg,rgba(244, 98, 99, 1) 0%, rgba(220, 53, 69, 1) 50%, rgba(237, 221, 83, 1) 100%);
-  color: white;
+  /* background:  linear-gradient(54deg,rgba(244, 98, 99, 1) 0%, rgba(220, 53, 69, 1) 50%, rgba(237, 221, 83, 1) 100%);*/
+  color: red;
   padding: 2rem;
   position: relative;
   height: 100%;
   border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
+  box-shadow: 2px 2px 8px 5px #0000002b;
 }
 
 .card-icon {
@@ -56,7 +55,7 @@
   font-size: 1.4rem;
   font-weight: 600;
   margin-bottom: 1rem;
-  color: var(--bs-light);
+  color: #343232;
 }
 
 .card-description {
@@ -74,7 +73,6 @@
   opacity: 0;
   transform: translateX(-10px);
   transition: all 0.3s ease;
-
 }
 
 .dashboard-card:hover .card-arrow {
