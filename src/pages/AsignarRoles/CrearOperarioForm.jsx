@@ -1,56 +1,52 @@
 // src/components/CrearOperario.jsx
-import React, { useState } from 'react';
-import { Form, Button, Container, Card } from 'react-bootstrap';
-import Swal from 'sweetalert2';
+import React, { useState } from "react";
+import { Form, Button, Container, Card } from "react-bootstrap";
+import Swal from "sweetalert2";
 
 const CrearOperario = () => {
   const [operario, setOperario] = useState({
-    nombre: '',
-    apellido: '',
-    dni: '',
-    telefono: '',
-    email: '',
-    especialidad: ''
+    nombre: "",
+    apellido: "",
+    dni: "",
+    telefono: "",
+    email: "",
+    especialidad: "",
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setOperario(prevState => ({
+    setOperario((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
-      // Aquí irá la lógica para enviar los datos a tu backend
-      // Por ejemplo usando axios:
-      // await axios.post('/api/operarios', operario);
-      
       Swal.fire({
-        title: '¡Éxito!',
-        text: 'Operario creado correctamente',
-        icon: 'success',
-        confirmButtonText: 'Aceptar'
+        title: "¡Éxito!",
+        text: "Operario creado correctamente",
+        icon: "success",
+        confirmButtonText: "Aceptar",
       });
 
       // Limpiar el formulario
       setOperario({
-        nombre: '',
-        apellido: '',
-        dni: '',
-        telefono: '',
-        email: '',
-        especialidad: ''
+        nombre: "",
+        apellido: "",
+        dni: "",
+        telefono: "",
+        email: "",
+        especialidad: "",
       });
     } catch (error) {
       Swal.fire({
-        title: 'Error',
-        text: 'No se pudo crear el operario',
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
+        title: "Error",
+        text: "No se pudo crear el operario",
+        icon: "error",
+        confirmButtonText: "Aceptar",
       });
     }
   };

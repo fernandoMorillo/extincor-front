@@ -41,11 +41,7 @@ const SideBarDashboard = () => {
               <Link to="/home/orden-pedido">Ordenes</Link>
             </li>
           )}
-          {(isAdmin || isOperario) && (
-            <li>
-              <Link to="/home/productos">Productos</Link>
-            </li>
-          )}
+
           {isAdmin && (
             <li>
               <Link to="/home/compras">Compras</Link>
