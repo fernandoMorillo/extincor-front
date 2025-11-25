@@ -1,0 +1,84 @@
+.asignar-operario-modal .modal-content {
+    border-radius: 1rem;
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.asignar-operario-modal .modal-header {
+    padding-top: 1.5rem;
+    background-color: #f8f9fa;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+}
+
+.asignar-operario-modal .modal-title {
+    color: #2c3e50;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.asignar-operario-modal .form-select {
+    border-radius: 0.75rem;
+    border: 1px solid #e0e0e0;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    background-color: #fff;
+    transition: all 0.3s ease;
+}
+
+.asignar-operario-modal .form-select:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+.asignar-operario-modal .form-label {
+    color: #34495e;
+    font-size: 1.1rem;
+}
+
+.asignar-operario-modal .btn {
+    border-radius: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.asignar-operario-modal .btn-primary {
+    background-color: #3498db;
+    border-color: #3498db;
+}
+
+.asignar-operario-modal .btn-primary:hover:not(:disabled) {
+    background-color: #2980b9;
+    border-color: #2980b9;
+    transform: translateY(-1px);
+}
+
+.asignar-operario-modal .btn-light {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+}
+
+.asignar-operario-modal .btn-light:hover {
+    background-color: #e9ecef;
+}
+
+.asignar-operario-modal .alert {
+    border-radius: 0.75rem;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.asignar-operario-modal .close {
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.asignar-operario-modal .close:hover {
+    opacity: 1;
+}
+
+.asignar-operario-modal .spinner-border {
+    width: 1.2rem;
+    height: 1.2rem;
+}

@@ -5,12 +5,15 @@ import "../App.css";
 import LoginExtincor from "./pages/Login/login";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import HomeExtincor from "./pages/Home/HomeExtincor";
+import Blog from "./pages/Blog/Blog";
+import ExtincorLanding from "./pages/Blog/ExtincorLanding";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
   return (
     <div>
       <Switch>
+        <Route path="/" component={ExtincorLanding} />
         <Route path="/login" component={LoginExtincor} />
         <Route path="/forgot-password" component={ForgotPassword} />
         <Route path="/home/*">

@@ -1,0 +1,151 @@
+/* InsumosTable.css */
+.insumos-container {
+  padding: 2rem;
+  /*background: linear-gradient(182deg,rgba(244, 98, 99, 1) 0%, rgba(220, 53, 69, 1) 50%, rgba(237, 221, 83, 1) 100%);*/
+  border-radius: 12px;
+
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.table-header h2 {
+  color: var(--bs-light);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.add-button {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: transform 0.2s ease;
+}
+
+.add-button:hover {
+  transform: translateY(-2px);
+}
+
+.custom-table {
+  background: var(--bs-dark);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.custom-table table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.custom-table th {
+  background: #176ce5 !important;
+  color: var(--bs-light);
+  font-weight: 500;
+  padding: 1rem;
+  text-align: left;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.custom-table td {
+  padding: 1rem;
+  color: var(--bs-light);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  vertical-align: middle;
+}
+
+.insumo-name {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+}
+
+.stock-badge {
+  background: rgba(46, 204, 113, 0.2);
+  color: #2ecc71;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.stock-badge.low-stock {
+  background: rgba(231, 76, 60, 0.2);
+  color: #e74c3c;
+}
+
+.precio {
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-icon {
+  width: 35px;
+  height: 35px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: var(--bs-light);
+  transition: all 0.2s ease;
+}
+
+.btn-icon:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.btn-icon.delete:hover {
+  background: rgba(231, 76, 60, 0.2);
+  color: #e74c3c;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  gap: 1rem;
+  color: var(--bs-light);
+}
+
+.error-container {
+  padding: 2rem;
+}
+
+@media (max-width: 768px) {
+  .insumos-container {
+    padding: 1rem;
+    margin: 0.5rem;
+  }
+
+  .table-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .custom-table {
+    font-size: 0.9rem;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+}

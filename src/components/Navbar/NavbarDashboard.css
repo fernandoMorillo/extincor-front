@@ -1,33 +1,20 @@
 .navbar {
-  justify-content: flex-end;
-  align-items: center;
-  background-color: #d9d9d9;
-  box-shadow: 2px 2px 8px 5px #0000002b;
   border-radius: 13px;
-  padding: 16px 0;
-}
-.navbar > div {
-  width: 20%;
-}
-.navbar > div > .row {
-  width: 100%;
-}
-.container--navbar {
-  display: flex;
+  padding: 12px 16px;
+  box-shadow: 2px 2px 8px 5px #0000002b !important;
 }
 
 .name--user {
   color: #000;
-  margin: 0;
   font-weight: 600;
+  font-size: 16px;
+  word-break: break-word;
 }
 
 .role--user {
   color: #fc6868;
-  margin-top: -7px;
   font-weight: 400;
   font-size: 14px;
-  display: block;
   text-transform: lowercase;
 }
 
@@ -37,7 +24,7 @@
   border-radius: 50%;
   background-color: #fc6868;
   color: #fff;
-  display: flex;
+  display: flex !important;
   justify-content: center;
   align-items: center;
   font-weight: 600;
@@ -48,4 +35,19 @@
 .dropdown-item:hover {
   background-color: #fc6868 !important;
   color: #fff !important;
+}
+
+/* Media query opcional para pantallas pequeñas */
+@media (max-width: 576px) {
+  .navbar {
+    text-align: center;
+  }
+
+  .name--user {
+    font-size: 14px;
+  }
+
+  .role--user {
+    font-size: 12px;
+  }
 }

@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { useLocation, Link } from "wouter";
 import { Button } from "react-bootstrap";
-import LoginExtincor from "../../assets/img/extincor-logo.png";
+import LoginExtincor from "../../assets/img/extincor.png";
 import "../SideBar/SideBarDashboard.css";
 import { Logout } from "../../services/authService";
 import LoadingSpinner from "../Spinner/Spinner";
+import { useAuth } from "../../hooks/useAuth";
 
 const SideBarDashboard = () => {
   const [loading, setLoading] = useState(false);
   const [, setLocation] = useLocation();
-
+  const { isAdmin, isOperario, isCliente } = useAuth();
   const handleLogout = () => {
     setLoading(true);
 
@@ -30,18 +31,31 @@ const SideBarDashboard = () => {
       </div>
       <div className="side-bar--options">
         <ul>
-          <li>
-            <Link to="/home/clientes">Clientes</Link>
-          </li>
-          <li>
-            <Link to="/home/orden-pedido">Ordenes</Link>
-          </li>
-          <li>
-            <Link to="/home/productos">Productos</Link>
-          </li>
-          <li>
-            <Link to="#">Compras</Link>
-          </li>
+          {isAdmin && (
+            <li>
+              <Link to="/home/clientes">Clientes</Link>
+            </li>
+          )}
+          {(isAdmin || isOperario) && (
+            <li>
+              <Link to="/home/orden-pedido">Ordenes</Link>
+            </li>
+          )}
+          {(isAdmin || isOperario) && (
+            <li>
+              <Link to="/home/productos">Productos</Link>
+            </li>
+          )}
+          {isAdmin && (
+            <li>
+              <Link to="/home/compras">Compras</Link>
+            </li>
+          )}
+          {(isAdmin || isCliente) && (
+            <li>
+              <Link to="/home/estadisticas">Estadisticas</Link>
+            </li>
+          )}
         </ul>
       </div>
       <div className="side-bar--logout">

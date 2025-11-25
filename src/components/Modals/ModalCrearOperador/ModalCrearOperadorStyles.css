@@ -1,0 +1,206 @@
+/* Estilos para el botón de crear operador */
+.btn-crear-operador {
+   background: linear-gradient(182deg, rgba(244, 98, 99, 1) 0%, rgba(220, 53, 69, 1) 100%);
+    border: none;
+    padding: 0.8rem 1.5rem;
+    gap: 8px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-crear-operador:hover {
+    background: linear-gradient(182deg, rgba(220, 53, 69, 1) 0%, rgba(244, 98, 99, 1) 100%);
+    transform: translateY(-1px);
+
+}
+
+/* Estilos para el modal */
+.modal-operador .modal-content {
+    background: #f8f9fa;
+    border-radius: 16px;
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Header del modal */
+.modal-header-custom-operador {
+    background: linear-gradient(182deg, rgba(244, 98, 99, 1) 0%, rgba(220, 53, 69, 1) 100%);
+    padding: 1.5rem;
+    border-radius: 16px 16px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-title-custom {
+    color: white;
+    margin: 0;
+    font-weight: 600;
+}
+
+.title-icon {
+    background-color: #e7f1ff;
+    color: #0d6efd;
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.title-text h4 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.title-text span {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.btn-close-custom {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    padding: 0;
+    opacity: 0.8;
+    transition: all 0.2s ease;
+}
+
+.btn-close-custom:hover {
+    opacity: 1;
+    color: #dc3545;
+}
+
+/* Cuerpo del modal */
+.modal-body-custom {
+    padding: 2rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.input-with-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-with-icon i {
+    position: absolute;
+    left: 12px;
+    color: #6c757d;
+}
+
+.input-with-icon input,
+.input-with-icon select {
+    padding-left: 35px;
+    height: 42px;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    width: 100%;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-with-icon input:focus,
+.input-with-icon select:focus {
+    border-color: rgba(220, 53, 69, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+/* Footer del modal */
+.modal-footer-custom {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.btn-cancelar {
+    background: transparent;
+    border: 1px solid #dc3545;
+    color: #dc3545;
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn-guardar {
+    background: linear-gradient(182deg, rgba(244, 98, 99, 1) 0%, rgba(220, 53, 69, 1) 100%);
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    min-width: 160px;
+}
+
+.btn-cancelar:hover {
+    background: rgba(220, 53, 69, 0.1);
+    border-color: #dc3545;
+    color: #dc3545;
+}
+
+.btn-guardar:hover {
+    background-color: #157347;
+}
+
+/* Estilos para el estado de carga */
+.btn-guardar:disabled {
+    background-color: #198754;
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+/* Estilos para el select personalizado */
+.select-custom {
+
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 16px 12px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-title-custom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .btn-close-custom {
+        top: 10px;
+        transform: none;
+    }
+}

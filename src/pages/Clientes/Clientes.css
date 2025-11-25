@@ -1,0 +1,13 @@
+.content-section {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 0.5rem;
+}
+
+.page-header {
+    margin-bottom: 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 2rem 2rem 0 2rem;
+
+}

@@ -9,12 +9,15 @@ import { Login } from "../../services/authService";
 import Swal from "sweetalert2";
 
 import LoadingSpinner from "../../components/Spinner/Spinner";
+import { useSessionStore} from "../../store/sessionStore.js";
 
 const LoginExtincor = () => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [, setLocation] = useLocation();
+
+  const setUser = useSessionStore((state) => state.setUser);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -38,6 +41,7 @@ const LoginExtincor = () => {
     setLoading(true);
     try {
       const response = await Login(email, password);
+      setUser({ id: response?.usuario?.id , nombre: response?.usuario?.nombre, correo: response?.usuario?.correo, rol: response?.usuario?.roles });
       setLocation("/home/");
     } catch (error) {
       Swal.fire({

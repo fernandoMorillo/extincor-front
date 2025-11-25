@@ -1,0 +1,58 @@
+
+.container {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.progressContainer {
+    height: 8px;
+    background-color: #e9ecef;
+    border-radius: 4px;
+    margin-top: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.progressBar {
+    position: absolute;
+    height: 100%;
+    transition: width 0.3s ease;
+    border-radius: 4px;
+}
+
+.timeDisplay {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.timeUnit {
+    text-align: center;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(54deg,rgba(244, 98, 99, 1) 0%, rgba(220, 53, 69, 1) 50%, rgba(237, 221, 83, 1) 100%);;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    color: white;
+}
+.text-muted {
+    color: white !important;
+}
+
+.progress-bar-success {
+    background-color: #198754;
+}
+
+.progress-bar-warning {
+    background-color: #ffc107;
+}
+
+.progress-bar-danger {
+    background-color: #dc3545;
+}
+
+.progress-bar-expired {
+    background-color: #6c757d;
+}

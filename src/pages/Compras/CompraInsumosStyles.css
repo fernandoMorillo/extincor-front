@@ -1,0 +1,254 @@
+/* CompraInsumos.css */
+.compra-insumos-container {
+  padding: 2rem;
+  background: #f8f9fa;
+  min-height: 100vh;
+}
+
+.dashboard-header {
+  margin-bottom: 2rem;
+}
+
+.stats-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.stat-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+}
+
+.stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.stat-card.total .stat-icon {
+  background: linear-gradient(182deg, rgba(244, 98, 99, 0.1) 0%, rgba(220, 53, 69, 0.1) 100%);
+  color: #dc3545;
+}
+
+.stat-card.pending .stat-icon {
+  background: rgba(237, 221, 83, 0.1);
+  color: #8b8000;
+}
+
+.stat-card.completed .stat-icon {
+  background: rgba(40, 167, 69, 0.1);
+  color: #28a745;
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.stat-label {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.content-grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.section-header h4 {
+  margin: 0;
+  color: #333;
+  font-weight: 600;
+}
+
+.form-section, .table-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.input-with-icon {
+  position: relative;
+}
+
+.input-with-icon i {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #dc3545;
+}
+
+.input-with-icon .form-control,
+.input-with-icon .select-custom {
+  padding-left: 2.5rem;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.btn-submit {
+  background: linear-gradient(182deg, rgba(244, 98, 99, 1) 0%, rgba(220, 53, 69, 1) 100%);
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.search-bar {
+  position: relative;
+  width: 300px;
+}
+
+.search-bar i {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+}
+
+.search-bar .form-control {
+  padding-left: 2.5rem;
+  border-radius: 20px;
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.custom-table th {
+  background: linear-gradient(182deg, rgba(244, 98, 99, 0.1) 0%, rgba(220, 53, 69, 0.1) 100%);
+  padding: 1rem;
+  font-weight: 600;
+  color: #333;
+  text-align: left;
+}
+
+.custom-table td {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.proveedor-badge {
+  background: rgba(244, 98, 99, 0.1);
+  color: #dc3545;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+.estado-badge {
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.estado-badge.pendiente {
+  background: rgba(237, 221, 83, 0.1);
+  color: #8b8000;
+}
+
+.estado-badge.pagado {
+  background: rgba(40, 167, 69, 0.1);
+  color: #28a745;
+}
+
+.monto {
+  font-family: monospace;
+  font-weight: 500;
+  color: #dc3545;
+}
+
+.custom-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.page-btn {
+  min-width: 36px;
+  height: 36px;
+  border: 1px solid rgba(244, 98, 99, 0.3);
+  background: white;
+  border-radius: 6px;
+  color: #dc3545;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.page-btn.active {
+  background: linear-gradient(182deg, rgba(244, 98, 99, 1) 0%, rgba(220, 53, 69, 1) 100%);
+  color: white;
+  border: none;
+}
+
+.page-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .compra-insumos-container {
+    padding: 1rem;
+  }
+
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-section, .table-section {
+    padding: 1rem;
+  }
+
+  .search-bar {
+    width: 100%;
+    margin-top: 1rem;
+  }
+}

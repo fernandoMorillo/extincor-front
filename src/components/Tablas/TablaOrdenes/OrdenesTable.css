@@ -1,0 +1,248 @@
+
+.ordenes-container {
+   /* background: linear-gradient(182deg,rgba(244, 98, 99, 1) 0%, rgba(220, 53, 69, 1) 50%, rgba(237, 221, 83, 1) 100%); */
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.search-section {
+    margin-bottom: 2rem;
+}
+
+.search-bar {
+    position: relative;
+    max-width: 400px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+}
+
+.search-input {
+    padding-left: 2.5rem;
+    border-radius: 25px;
+    border: 1px solid rgba(244, 98, 99, 0.3);
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.search-input:focus {
+    border-color: rgba(244, 98, 99, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba(244, 98, 99, 0.25);
+}
+
+.custom-table {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.custom-table table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.custom-table th {
+    background: linear-gradient(182deg, rgba(244, 98, 99, 1) 0%, rgba(220, 53, 69, 1) 100%);
+    color: white;
+    padding: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+}
+
+.custom-table td {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(244, 98, 99, 0.1);
+    vertical-align: middle;
+}
+
+.orden-numero {
+    font-weight: 600;
+    color: #dc3545;
+}
+
+.cliente-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.estado-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: block;
+    width: fit-content;
+}
+
+.estado-pendiente {
+    background: rgba(237, 221, 83, 0.2);
+    color: #8b8000;
+}
+
+.estado-proceso {
+    background: rgba(98, 142, 244, 0.2);
+    color: #176ce5;
+}
+
+.estado-completado {
+    background: rgba(40, 167, 69, 0.2);
+    color: #28a745;
+}
+
+.estado-cancelado {
+    background: rgba(108, 117, 125, 0.2);
+    color: #6c757d;
+}
+
+.monto {
+    font-family: monospace;
+    font-weight: 500;
+    color: #dc3545;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-action {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: #666;
+    transition: all 0.2s ease;
+}
+
+.btn-action:hover {
+    transform: translateY(-2px);
+}
+
+.btn-action.view:hover {
+    background: rgba(244, 98, 99, 0.1);
+    color: #dc3545;
+}
+
+.btn-action.edit:hover {
+    background: rgba(237, 221, 83, 0.2);
+    color: #8b8000;
+}
+
+.btn-action.delete:hover {
+    background: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+}
+
+/* Estilos para la paginación */
+.custom-pagination {
+    gap: 5px;
+}
+
+.custom-pagination .page-item .page-link {
+    border: none;
+    background-color: #f8f9fa;
+    color: #6c757d;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.custom-pagination .page-item:not(.active) .page-link:hover {
+    background-color: #e9ecef;
+    color: #495057;
+    transform: translateY(-2px);
+}
+
+.custom-pagination .page-item.active .page-link {
+    background: linear-gradient(135deg, #000DFF 0%, #6B73FF 100%);
+    color: white;
+    box-shadow: 0 2px 4px rgba(13, 110, 253, 0.25);
+}
+
+.custom-pagination .page-item.disabled .page-link {
+    background-color: #e9ecef;
+    color: #adb5bd;
+    cursor: not-allowed;
+}
+
+/* Estilos para los botones de Primera/Última página */
+.custom-pagination .page-item:first-child .page-link,
+.custom-pagination .page-item:last-child .page-link {
+    font-size: 0.9rem;
+    padding: 8px 12px;
+    background: linear-gradient(182deg,rgba(244, 98, 99, 1) 0%, rgba(220, 53, 69, 1) 50%, rgba(237, 221, 83, 1) 100%);
+    color: white;
+}
+
+/* Animación suave al cambiar de página */
+.custom-pagination .page-link {
+    position: relative;
+    overflow: hidden;
+}
+
+.custom-pagination .page-link::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s;
+}
+
+.custom-pagination .page-link:active::after {
+    width: 100px;
+    height: 100px;
+}
+
+@media (max-width: 768px) {
+    .ordenes-container {
+        padding: 1rem;
+    }
+
+    .search-section {
+        margin-bottom: 1rem;
+    }
+
+    .search-bar {
+        max-width: 100%;
+    }
+
+    .estado-badge {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+}
+
+.btn-action.assign {
+    background-color: #6610f2;
+    color: white;
+}
+
+.btn-action.assign:hover {
+    background-color: #520dc2;
+}
+
+

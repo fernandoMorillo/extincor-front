@@ -1,0 +1,43 @@
+.tabla-container {
+  margin: 20px;
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.table-header th {
+  background-color: #f8f9fa;
+  color: #495057;
+  font-weight: 600;
+}
+
+.estado-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.85em;
+  font-weight: 500;
+}
+
+.estado-badge.activo {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.estado-badge.inactivo {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.acciones {
+  white-space: nowrap;
+}
+
+.tabla-container .table {
+  margin-bottom: 0;
+}
+
+.table > :not(caption) > * > * {
+  padding: 0.75rem;
+  vertical-align: middle;
+}

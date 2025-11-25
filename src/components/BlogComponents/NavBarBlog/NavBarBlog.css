@@ -1,0 +1,22 @@
+.nav-link-hover::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #dc3545;
+  transition: width 0.3s ease-in-out;
+}
+
+.nav-link-hover:hover::after {
+  width: 100%;
+}
+
+.nav-link-hover:hover {
+  color: #dc3545 !important;
+}
+
+.container {
+  background-color: transparent !important;
+}
